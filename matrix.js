@@ -13,6 +13,8 @@ var strLength;
 var myRow;
 var myRows;
 
+var interval
+
 function setValues() {
 	canvas = document.getElementById("matrixCanvas");
 	
@@ -23,7 +25,7 @@ function setValues() {
 	ctx = canvas.getContext("2d");	
 
 	lines = Math.floor(window.innerWidth/textSize);
-	strLength = Math.floor(window.innerHeight/textSize);
+	strLength = Math.ceil(window.innerHeight/textSize);
 
 	ctx.textBaseline = "middle";
 	ctx.shadowOffsetX = 0;
@@ -38,11 +40,14 @@ function setValues() {
 	}
 }
 
-window.onload = function() {
+function init() {
+	clearInterval(interval)
 	setValues();
-	setInterval(rain, 50);
-	//myRow = new Row(5);
+	interval = setInterval(rain, 50);
 }
+
+window.onload = init
+window.onresize = init
 
 function Row(x_pos) {
 	this.x = x_pos;
@@ -68,10 +73,8 @@ function Row(x_pos) {
 			this.bottom = 0;
 			this.str = randomString(strLength);
 			return true;	// check if ended
-		}
-		else {
+		} else
 			return false;	// check if ended
-		}
 	}
 }
 
